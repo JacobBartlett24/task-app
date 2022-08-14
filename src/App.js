@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import Overview from './components/Overview';
 
-function App() {
-  return (
+
+class App extends Component{
+  constructor(){
+    super()
+
+    this.state = {
+      value: '',
+      tasks: [],
+    };
+    this.onClickBtn = this.onClickBtn.bind(this);
+  }
+
+  onClickBtn(){
+    let inputValue = document.getElementById('input').value;
+    this.setState(prevState => ({
+      tasks: [...prevState.tasks, inputValue],
+    }));
+    let newListItem = document.createElement('li')
+    newListItem.innerText = this.state.tasks[this.state.tasks.length -1]
+    let taskList = document.getElementById('tasklist');
+    taskList.appendChild(newListItem);
+  }
+
+  render(){
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Overview content = "Click Me!" onButtonClicked={this.onClickBtn}/>
     </div>
   );
+}
 }
 
 export default App;
